@@ -1,0 +1,23 @@
+:root,
+[data-theme="light"] {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 32 95% 44%;
+  --border: 0 0% 85%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 40%;
+}
+
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --primary: 32 95% 44%;
+  --border: 0 0% 35%;
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 100%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 75%;
+}
