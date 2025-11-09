@@ -9,11 +9,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-center px-4 pt-6">
-        <div className="flex w-full max-w-6xl flex-col items-center gap-4 sm:flex-row sm:justify-center md:justify-between">
+        <div className="relative flex w-full max-w-6xl flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <TopNavTabs />
-          <div className="sm:self-end md:self-auto">
-            <ThemeToggle />
-          </div>
+          <ThemeToggle className="hidden sm:flex sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 sm:z-50" />
         </div>
       </header>
       <main>

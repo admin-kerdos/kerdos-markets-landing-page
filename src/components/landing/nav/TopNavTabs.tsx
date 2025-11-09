@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const tabs = [
   { id: "hero", label: "Inicio" },
@@ -13,6 +15,7 @@ const tabs = [
 export function TopNavTabs() {
   const [activeId, setActiveId] = useState(tabs[0].id);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+  const [mobileOpen, setMobileOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
@@ -29,6 +32,18 @@ export function TopNavTabs() {
       width
     });
   }, []);
+
+  const navigateTo = useCallback(
+    (id: string) => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setActiveId(id);
+      updateIndicator(id);
+    },
+    [updateIndicator]
+  );
 
   useEffect(() => {
     updateIndicator(activeId);
@@ -93,19 +108,57 @@ export function TopNavTabs() {
     return () => container.removeEventListener("scroll", handleScroll);
   }, [activeId, updateIndicator]);
 
+  useEffect(() => {
+    if (!mobileOpen) {
+      document.body.style.removeProperty("overflow");
+      return;
+    }
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      return;
+    }
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [mobileOpen]);
+
+  const mobileMenuId = "mobile-nav-panel";
+
   return (
-    <nav className="sticky top-6 z-40 flex w-full justify-center px-4">
-      <div className="mx-auto flex w-full max-w-6xl justify-center">
+    <nav className="sticky top-6 z-40 w-full px-4">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 sm:justify-center">
+        <button
+          type="button"
+          className="mr-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-background/70 shadow-md backdrop-blur sm:hidden dark:border-white/10 dark:bg-white/10"
+          onClick={() => setMobileOpen(true)}
+          aria-expanded={mobileOpen}
+          aria-controls={mobileMenuId}
+          aria-label="Abrir navegación"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
         <div
           ref={containerRef}
           className={cn(
-            "relative inline-flex items-center gap-2 rounded-full border border-white/30 bg-background/70 px-2 py-1 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-white/10",
-            "w-full max-w-full justify-center overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-auto sm:overflow-visible"
+            "relative hidden items-center gap-2 overflow-hidden rounded-full border px-2 py-1 shadow-lg backdrop-blur-md sm:flex",
+            "border-black/10 bg-white/80 shadow-[0_12px_35px_rgba(15,23,42,0.09)] dark:border-white/10 dark:bg-white/10 dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
+            "w-full max-w-full justify-center sm:w-auto sm:max-w-none"
           )}
           aria-label="Secciones de la página"
         >
           <span
-            className="pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full bg-primary/20 transition-[left,width] duration-300 ease-out"
+            className="pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full border border-black/5 bg-primary/10 shadow-[0_10px_30px_rgba(253,126,20,0.28)] transition-[left,width] duration-300 ease-out dark:border-primary/40 dark:bg-primary/20 dark:shadow-[0_18px_45px_rgba(253,126,20,0.45)]"
             style={{
               left: `${indicator.left}px`,
               width: `${indicator.width}px`
@@ -127,12 +180,7 @@ export function TopNavTabs() {
               )}
               onClick={(event) => {
                 event.preventDefault();
-                const section = document.getElementById(tab.id);
-                if (section) {
-                  section.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-                setActiveId(tab.id);
-                updateIndicator(tab.id);
+                navigateTo(tab.id);
               }}
             >
               {tab.label}
@@ -140,6 +188,55 @@ export function TopNavTabs() {
           ))}
         </div>
       </div>
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 flex sm:hidden">
+          <div
+            id={mobileMenuId}
+            className="flex h-full w-[82%] max-w-sm flex-col gap-8 border-r border-border/60 bg-background px-6 py-8 text-foreground shadow-2xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-base font-semibold">Secciones</span>
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
+                <button
+                  type="button"
+                  className="rounded-full border border-border/60 p-2"
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Cerrar navegación"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  className={cn(
+                    "w-full rounded-2xl border px-4 py-3 text-left text-lg font-semibold",
+                    activeId === tab.id
+                      ? "border-primary/60 bg-primary/10 text-primary"
+                      : "border-border/70 bg-card/60 text-foreground"
+                  )}
+                  onClick={() => {
+                    navigateTo(tab.id);
+                    setMobileOpen(false);
+                  }}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <button
+            type="button"
+            className="flex-1 bg-black/40 backdrop-blur"
+            aria-label="Cerrar navegación"
+            onClick={() => setMobileOpen(false)}
+          />
+        </div>
+      )}
     </nav>
   );
 }

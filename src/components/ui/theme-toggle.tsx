@@ -41,12 +41,15 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
     });
   }, []);
 
-  const persistTheme = useCallback((next: "light" | "dark") => {
-    syncThemeNodes(next);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, next);
-    }
-  }, [syncThemeNodes]);
+  const persistTheme = useCallback(
+    (next: "light" | "dark") => {
+      syncThemeNodes(next);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(STORAGE_KEY, next);
+      }
+    },
+    [syncThemeNodes]
+  );
 
   const initializedRef = useRef(false);
 
@@ -67,7 +70,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   }, [persistTheme]);
 
   const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
+    (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleToggle();
@@ -77,37 +80,29 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   );
 
   return (
-    <div
-      className={cn(
-        "flex h-8 w-16 cursor-pointer rounded-full p-1 transition-all duration-300",
-        isDark ? "border border-zinc-800 bg-zinc-950" : "border border-zinc-200 bg-white",
-        className
-      )}
+    <button
+      data-testid="theme-track"
+      type="button"
+      role="switch"
+      aria-checked={isDark}
+      aria-label="Cambiar tema"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      role="button"
-      tabIndex={0}
-      aria-pressed={isDark}
-      aria-label="Toggle theme"
+      className={cn(
+        "relative inline-flex h-8 w-16 flex-shrink-0 items-center rounded-full bg-white/90 p-1 ring-1 ring-zinc-200/70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:bg-zinc-950/95 dark:ring-white/25",
+        className
+      )}
     >
-      <div className="flex w-full items-center justify-between">
-        <div
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-full transition-transform duration-300",
-            isDark ? "translate-x-0 bg-zinc-800" : "translate-x-8 bg-gray-200"
-          )}
-        >
-          {isDark ? <Moon className="h-4 w-4 text-white" strokeWidth={1.5} /> : <Sun className="h-4 w-4 text-gray-700" strokeWidth={1.5} />}
-        </div>
-        <div
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-full transition-transform duration-300",
-            isDark ? "bg-transparent" : "-translate-x-8"
-          )}
-        >
-          {isDark ? <Sun className="h-4 w-4 text-gray-500" strokeWidth={1.5} /> : <Moon className="h-4 w-4 text-black" strokeWidth={1.5} />}
-        </div>
-      </div>
-    </div>
+      <span
+        data-testid="theme-thumb"
+        className={cn(
+          "pointer-events-none absolute inset-y-1 left-1 flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#f97316] shadow-[0_6px_15px_rgba(15,23,42,0.2)] transition-transform duration-300 ease-out will-change-transform dark:bg-zinc-900 dark:text-indigo-100",
+          isDark ? "translate-x-8" : "translate-x-0"
+        )}
+      >
+        <Sun className={cn("h-3 w-3 transition-opacity duration-150", isDark ? "opacity-0" : "opacity-100")} strokeWidth={1.5} />
+        <Moon className={cn("absolute h-3 w-3 transition-opacity duration-150", isDark ? "opacity-100" : "opacity-0")} strokeWidth={1.5} />
+      </span>
+    </button>
   );
 }
