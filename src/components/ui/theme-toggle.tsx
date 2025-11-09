@@ -82,6 +82,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   return (
     <button
       data-testid="theme-track"
+      data-theme-switch
       type="button"
       role="switch"
       aria-checked={isDark}

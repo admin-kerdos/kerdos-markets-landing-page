@@ -149,16 +149,17 @@ export function TopNavTabs() {
           <Menu className="h-5 w-5" />
         </button>
         <div
+          data-nav
           ref={containerRef}
           className={cn(
-            "relative hidden items-center gap-2 overflow-hidden rounded-full border px-2 py-1 shadow-lg backdrop-blur-md sm:flex",
-            "border-black/10 bg-white/80 shadow-[0_12px_35px_rgba(15,23,42,0.09)] dark:border-white/10 dark:bg-white/10 dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
+            "relative hidden h-8 items-center gap-1 overflow-hidden rounded-full bg-white/90 px-1.5 shadow-[0_12px_35px_rgba(15,23,42,0.09)] ring-1 ring-zinc-200/70 backdrop-blur-md sm:flex",
+            "dark:bg-zinc-950/95 dark:ring-white/25 dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
             "w-full max-w-full justify-center sm:w-auto sm:max-w-none"
           )}
           aria-label="Secciones de la página"
         >
           <span
-            className="pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full border border-black/5 bg-primary/10 shadow-[0_10px_30px_rgba(253,126,20,0.28)] transition-[left,width] duration-300 ease-out dark:border-primary/40 dark:bg-primary/20 dark:shadow-[0_18px_45px_rgba(253,126,20,0.45)]"
+            className="pointer-events-none absolute inset-y-1 rounded-full border border-black/5 bg-primary/10 shadow-[0_10px_30px_rgba(253,126,20,0.28)] transition-[left,width] duration-300 ease-out dark:border-primary/40 dark:bg-primary/20 dark:shadow-[0_18px_45px_rgba(253,126,20,0.45)]"
             style={{
               left: `${indicator.left}px`,
               width: `${indicator.width}px`
@@ -173,7 +174,7 @@ export function TopNavTabs() {
               }}
               aria-current={activeId === tab.id ? "page" : undefined}
               className={cn(
-                "relative z-10 flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-center transition-colors",
+                "relative z-10 flex-shrink-0 whitespace-nowrap rounded-full px-4 py-1 text-sm font-medium text-center transition-colors",
                 activeId === tab.id
                   ? "text-primary"
                   : "text-foreground/70 hover:text-primary"
