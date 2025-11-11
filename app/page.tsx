@@ -1,9 +1,9 @@
-import { WhatIsKerdosSection } from "@/components/landing/about/WhatIsKerdosSection";
 import { HeroVideo } from "@/components/landing/hero/HeroVideo";
 import { HowItWorksBase } from "@/components/landing/howitworks/HowItWorksBase";
 import { FAQSection } from "@/components/landing/faq/FAQSection";
 import { TopNavTabs } from "@/components/landing/nav/TopNavTabs";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { KerdosFooter } from "@/components/ui/footer";
 
 export default function HomePage() {
   return (
@@ -20,16 +20,7 @@ export default function HomePage() {
             <HeroVideo />
           </div>
         </section>
-        <section
-          id="what-is-kerdos"
-          aria-labelledby="what-is-kerdos-heading"
-          className="bg-background px-4 pb-16 pt-20 md:px-8 lg:px-16"
-        >
-          <div className="mx-auto w-full max-w-6xl">
-            <WhatIsKerdosSection headingId="what-is-kerdos-heading" />
-          </div>
-        </section>
-        <section id="how-it-works" aria-labelledby="how-heading" className="bg-background px-4 pb-16 pt-20 md:px-8 lg:px-16">
+        <section id="how-it-works" aria-labelledby="how-heading" className="bg-background px-4 pb-1 pt-10 md:px-8 lg:px-16">
           <h2 id="how-heading" className="sr-only">
             Cómo funciona
           </h2>
@@ -37,7 +28,7 @@ export default function HomePage() {
             <HowItWorksBase />
           </div>
         </section>
-        <section id="faq" aria-labelledby="faq-heading" className="bg-background px-4 pb-16 pt-10 md:px-8 lg:px-16">
+        <section id="faq" aria-labelledby="faq-heading" className="bg-background px-4 pb-16 pt-0 -mt-10 md:-mt-12 md:px-8 lg:px-16">
           <h2 id="faq-heading" className="sr-only">
             Preguntas frecuentes
           </h2>
@@ -45,6 +36,11 @@ export default function HomePage() {
             <FAQSection />
           </div>
         </section>
+        <footer className="-mt-16 bg-background px-4 pb-12 pt-4 md:-mt-20 md:px-8 lg:px-16">
+          <div className="mx-auto w-full max-w-6xl">
+            <KerdosFooter />
+          </div>
+        </footer>
       </main>
     </div>
   );

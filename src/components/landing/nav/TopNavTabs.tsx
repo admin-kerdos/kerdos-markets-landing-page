@@ -7,9 +7,8 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const tabs = [
   { id: "hero", label: "Inicio" },
-  { id: "what-is-kerdos", label: "Qué es Kerdos Markets" },
-  { id: "how-it-works", label: "Cómo funciona" },
-  { id: "faq", label: "Preguntas" }
+  { id: "how-it-works", label: "Qué es Kérdos Markets" },
+  { id: "faq", label: "FAQ" }
 ];
 
 export function TopNavTabs() {

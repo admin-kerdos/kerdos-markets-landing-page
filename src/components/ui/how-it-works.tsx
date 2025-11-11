@@ -1,8 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Layers, Search, Zap } from "lucide-react";
+import {
+  Coins,
+  Globe2,
+  Layers,
+  ListChecks,
+  Percent,
+  ShieldCheck,
+  Tag,
+} from "lucide-react";
 import type React from "react";
+import { useMemo, useState } from "react";
 
 interface HowItWorksProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -51,74 +60,66 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({
 }) => {
   const stepsData = [
     {
-      icon: <Search className="h-6 w-6" />,
-      title: "Enter your query",
+      icon: <Globe2 className="h-6 w-6" />,
+      title: "Qué es Kérdos Markets",
       description:
-        "Enter part name or article number, and we'll instantly check availability across thousands of stores.",
+        "El primer mercado de predicción en español y portugués, 100% enfocado en LATAM. Acá comprás y vendés posiciones sobre lo que pasa en economía, elecciones, partidos de futbol, deportes y entretenimiento.",
       benefits: [
-        "Smart search understands even imprecise queries",
-        "Automatic city detection",
-        "Search history for quick access",
+        "Diseñado para comunidades de habla hispana y portuguesa",
+        "Operá escenarios de la región con liquidez 24/7",
+        "Comprá o vendé según tu lectura del evento",
       ],
     },
     {
       icon: <Layers className="h-6 w-6" />,
-      title: "Choose the best offer",
+      title: "Qué es un mercado de predicción",
       description:
-        "Compare prices, location and availability, choose the optimal option.",
+        "Es un mercado entre personas: cada posición paga $1 si acierta y $0 si falla. El precio refleja la probabilidad que la comunidad asigna al resultado.",
       benefits: [
-        "Sort by price, distance and rating",
-        "Filter by availability and manufacturer",
-        "Detailed information about each offer",
+        "Si “Sí” vale $0.70, el mercado estima 70% de probabilidad",
+        "Podés entrar y salir antes del final para asegurar ganancias o limitar pérdidas",
+        "Trading puro: no jugás contra la casa sino contra otros participantes",
       ],
     },
     {
-      icon: <Zap className="h-6 w-6" />,
-      title: "Contact the store",
+      icon: <ListChecks className="h-6 w-6" />,
+      title: 'Qué se puede "apostar" (participar)',
       description:
-        "Call the store directly or request a callback through our service.",
+        "Economía, política, deportes y entretenimiento: vos elegís el evento y operás tu opinión.",
       benefits: [
-        "Direct contact without intermediaries",
-        "Parts reservation capability",
-        "Route building to store",
+        "Economía: inflación, tipo de cambio, crecimiento",
+        "Política: encuestas y resultados",
+        "Deportes: campeones, partidos, rendimiento",
+        "Entretenimiento y tendencias: premios, estrenos, cultura pop",
+      ],
+    },
+    {
+      icon: <ShieldCheck className="h-6 w-6" />,
+      title: "Por qué es mejor que lo que ya existe",
+      description:
+        "Más transparencia, menos conflicto de interés y control total del riesgo.",
+      benefits: [
+        "No jugás contra la casa, Kérdos no toma el otro lado de tu posición",
+        "Kérdos genera ingresos por comisiones por cada trade, no por tu pérdida",
+        "Podés vender antes del final para gestionar riesgo",
+        "100% seguro: tus fondos siempre están bajo tu control, Kérdos no tiene tu dinero y podés retirarlo 24/7 sin comisiones ni bloqueos.",
       ],
     },
   ];
 
   return (
     <div
-      className={cn("w-full bg-background py-16 sm:py-24", className)}
+      className={cn("w-full bg-background pb-16 pt-2 sm:pb-24 sm:pt-6", className)}
       {...props}
     >
       <div className="container mx-auto px-4">
-        <div className="mx-auto mb-16 max-w-4xl text-center">
+        <div className="mx-auto mb-10 max-w-4xl text-center">
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            How it works
+            Kérdos Markets
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Our service uses advanced technologies for instant auto parts search
-            across thousands of stores in your city
-          </p>
         </div>
 
-        <div className="relative mx-auto mb-8 w-full max-w-4xl">
-          <div
-            aria-hidden="true"
-            className="absolute left-[16.6667%] top-1/2 h-0.5 w-[66.6667%] -translate-y-1/2 bg-border"
-          ></div>
-          <div className="relative grid grid-cols-3">
-            {stepsData.map((_, index) => (
-              <div
-                key={index}
-                className="flex h-8 w-8 items-center justify-center justify-self-center rounded-full bg-muted font-semibold text-foreground ring-4 ring-background"
-              >
-                {index + 1}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {stepsData.map((step, index) => (
             <StepCard
               key={index}
