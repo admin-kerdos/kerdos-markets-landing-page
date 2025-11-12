@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, ThumbsDown, ThumbsUp } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
@@ -151,46 +152,53 @@ export function FAQSection() {
                 onClick={() => handleToggle(item.id)}
               >
                 <span className="text-base font-medium text-foreground">{item.question}</span>
-                <span
-                  className={cn(
-                    "inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-sm transition",
-                    isOpen ? "rotate-45 text-primary" : "text-muted-foreground",
-                  )}
+                <ChevronDown
                   aria-hidden="true"
-                >
-                  +
-                </span>
+                  className={cn(
+                    "h-5 w-5 text-muted-foreground transition-transform duration-300",
+                    isOpen ? "rotate-180 text-primary" : "",
+                  )}
+                />
               </button>
 
-              {isOpen && (
-                <div
-                  id={`faq-answer-${item.id}`}
-                  data-testid={`faq-answer-${item.id}`}
-                  className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground"
-                >
-                  {item.answer}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key={item.id}
+                    id={`faq-answer-${item.id}`}
+                    data-testid={`faq-answer-${item.id}`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground">
+                      {item.answer}
 
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <p className="font-medium text-foreground">¿Te sirvió?</p>
-                    {helpfulChoices.map((choice) => (
-                      <button
-                        key={choice.key}
-                        type="button"
-                        data-testid={`feedback-${choice.key}-${item.id}`}
-                        aria-label={choice.label}
-                        aria-pressed={selected === choice.key}
-                        onClick={() => handleFeedback(item.id, choice.key)}
-                        className={cn(
-                          "inline-flex items-center justify-center rounded-full p-1 transition",
-                          selected === choice.key ? "text-primary" : "text-muted-foreground hover:text-primary/80",
-                        )}
-                      >
-                        {choice.icon}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <p className="font-medium text-foreground">¿Te sirvió?</p>
+                        {helpfulChoices.map((choice) => (
+                          <button
+                            key={choice.key}
+                            type="button"
+                            data-testid={`feedback-${choice.key}-${item.id}`}
+                            aria-label={choice.label}
+                            aria-pressed={selected === choice.key}
+                            onClick={() => handleFeedback(item.id, choice.key)}
+                            className={cn(
+                              "inline-flex items-center justify-center rounded-full p-1 transition",
+                              selected === choice.key ? "text-primary" : "text-muted-foreground hover:text-primary/80",
+                            )}
+                          >
+                            {choice.icon}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </article>
           );
         })}
