@@ -16,16 +16,16 @@ type FAQItem = {
 const faqItems: FAQItem[] = [
   {
     id: "difference",
-    question: "¿Qué es Kerdos Markets y en qué se diferencia de una casa de apuestas?",
+    question: "¿Qué es Kérdos Markets y en qué se diferencia de una casa de apuestas?",
     answer: (
       <>
         <p>
-          Kerdos es un mercado de predicción: comprás y vendés posiciones contra otras personas, no contra la casa. Kerdos
+          Kérdos es un mercado de predicción: comprás y vendés posiciones contra otras personas, no contra la casa. Kérdos
           no toma el otro lado; gana con comisiones por trading/cierre. Los precios reflejan probabilidad y se actualizan
           con la información del mercado.
         </p>
         <p>
-          En mercados de predicción, hasta ≈43% de usuarios resultan rentables vs ≈2% en sportsbooks tradicionales, porque
+          Por ejemplo en deporte los mercados de predicción, hasta ≈43% de usuarios resultan rentables vs ≈2% en sportsbooks tradicionales, porque
           el incentivo está en aportar información, no en apostar contra una casa que controla las cuotas.
         </p>
       </>
@@ -68,8 +68,7 @@ const faqItems: FAQItem[] = [
     question: "¿Cómo deposito y retiro? ¿Hay mínimos o comisiones? ¿Los retiros son instantáneos?",
     answer: (
       <p>
-        Podés usar métodos locales (depende del país). Los retiros son instantáneos y sin comisión de Kerdos; tu banco o
-        procesador podría cobrar costos propios. Puede requerirse verificación básica para cumplir normativa.
+        Podés usar las wallets phantom y solflareo o directamente dipositar usdc en tu cuenta. En un futuro se espera le integracion de wallets locales. Los retiros son instantáneos y sin comisión de Kérdos.
       </p>
     ),
   },
@@ -78,8 +77,7 @@ const faqItems: FAQItem[] = [
     question: "¿En qué países está disponible y en qué idiomas puedo usar la plataforma?",
     answer: (
       <p>
-        La app funciona en español y portugués. La disponibilidad por país puede variar por regulación local; dentro de la app
-        se muestra si tu país está habilitado y qué métodos de pago están activos.
+        La app funciona en español y portugués. La app esta disponible en todo el mundo.
       </p>
     ),
   },
@@ -95,22 +93,11 @@ const faqItems: FAQItem[] = [
   },
   {
     id: "fees",
-    question: "¿Qué comisiones cobra Kerdos y por qué no apuesta contra mí?",
+    question: "¿Qué comisiones cobra Kérdos y por qué no apuesta contra mí?",
     answer: (
       <p>
-        Se aplican comisiones pequeñas por operar y/o al cierre del mercado. Kerdos no toma posiciones contra vos; su ingreso
+        Se aplican comisiones de 1% a 2% por cada trade. Kérdos no toma posiciones contra vos; su ingreso
         proviene de estas comisiones, eliminando el conflicto de interés típico de sportsbooks.
-      </p>
-    ),
-  },
-  {
-    id: "risks",
-    question: "¿Qué riesgos existen y cómo puedo limitar pérdidas?",
-    answer: (
-      <p>
-        Riesgo de pérdida si el precio va en contra, posible baja liquidez e información incompleta. Para gestionarlo: vendé
-        antes si cambia el escenario, definí montos máximos, diversificá y usá alertas. Participá solo con dinero que estés
-        dispuesto a arriesgar.
       </p>
     ),
   },

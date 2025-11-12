@@ -107,7 +107,7 @@ export function KerdosFooter() {
     <Footer
       logo={
         <Image
-          src="/landing/logo.svg"
+          src="/landing/logo_vector.svg"
           alt="Kérdos Markets"
           width={40}
           height={40}
