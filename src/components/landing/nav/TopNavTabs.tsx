@@ -55,31 +55,49 @@ export function TopNavTabs() {
   }, [activeId, updateIndicator]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible.length > 0) {
-          const nextId = visible[0].target.id;
-          setActiveId((prev) => (prev === nextId ? prev : nextId));
+    const resolveSections = () =>
+      tabs
+        .map((tab) => document.getElementById(tab.id))
+        .filter((section): section is HTMLElement => Boolean(section));
+
+    const getActivationLine = () => {
+      const container = containerRef.current;
+      if (!container) {
+        return window.scrollY + 120;
+      }
+      const { top, height } = container.getBoundingClientRect();
+      return window.scrollY + top + height + 12;
+    };
+
+    const updateFromScroll = () => {
+      const sections = resolveSections();
+      if (!sections.length) {
+        return;
+      }
+
+      const activationLine = getActivationLine();
+      let currentId = sections[0].id;
+
+      for (const section of sections) {
+        const rectTop = section.getBoundingClientRect().top + window.scrollY;
+        const scrollMarginTop = parseFloat(getComputedStyle(section).scrollMarginTop || "0");
+        const threshold = rectTop - scrollMarginTop;
+        if (activationLine >= threshold) {
+          currentId = section.id;
+        } else {
+          break;
         }
-      },
-      {
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: [0.1, 0.25, 0.5]
       }
-    );
 
-    tabs.forEach((tab) => {
-      const section = document.getElementById(tab.id);
-      if (section) {
-        observer.observe(section);
-      }
-    });
+      setActiveId((prev) => (prev === currentId ? prev : currentId));
+    };
 
+    updateFromScroll();
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
+    window.addEventListener("resize", updateFromScroll);
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", updateFromScroll);
+      window.removeEventListener("resize", updateFromScroll);
     };
   }, []);
 
@@ -151,7 +169,7 @@ export function TopNavTabs() {
           data-nav
           ref={containerRef}
           className={cn(
-            "relative hidden h-8 items-center gap-1 overflow-hidden rounded-full bg-white/90 px-1.5 shadow-[0_12px_35px_rgba(15,23,42,0.09)] ring-1 ring-zinc-200/70 backdrop-blur-md sm:flex",
+            "relative flex h-8 items-center gap-1 overflow-hidden rounded-full bg-white/90 px-1.5 shadow-[0_12px_35px_rgba(15,23,42,0.09)] ring-1 ring-zinc-200/70 backdrop-blur-md",
             "dark:bg-zinc-950/95 dark:ring-white/25 dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
             "w-full max-w-full justify-center sm:w-auto sm:max-w-none"
           )}
