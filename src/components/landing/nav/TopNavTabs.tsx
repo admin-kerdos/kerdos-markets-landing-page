@@ -17,6 +17,8 @@ export function TopNavTabs() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const suppressAutoActive = useRef(false);
+  const scrollLockTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateIndicator = useCallback((id: string) => {
     const link = linkRefs.current[id];
@@ -38,6 +40,13 @@ export function TopNavTabs() {
       if (section) {
         section.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+      suppressAutoActive.current = true;
+      if (scrollLockTimeout.current) {
+        clearTimeout(scrollLockTimeout.current);
+      }
+      scrollLockTimeout.current = setTimeout(() => {
+        suppressAutoActive.current = false;
+      }, 800);
       setActiveId(id);
       updateIndicator(id);
     },
@@ -87,6 +96,10 @@ export function TopNavTabs() {
         } else {
           break;
         }
+      }
+
+      if (suppressAutoActive.current) {
+        return;
       }
 
       setActiveId((prev) => (prev === currentId ? prev : currentId));
@@ -149,6 +162,14 @@ export function TopNavTabs() {
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [mobileOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollLockTimeout.current) {
+        clearTimeout(scrollLockTimeout.current);
+      }
+    };
+  }, []);
 
   const mobileMenuId = "mobile-nav-panel";
 

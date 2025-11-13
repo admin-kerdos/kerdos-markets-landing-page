@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Github, Instagram, Twitter } from "lucide-react";
+import { Github, Instagram } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 
@@ -24,6 +24,21 @@ interface FooterProps {
     license?: string;
   };
 }
+
+const XLogo = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-hidden="true"
+    className={className}
+  >
+    <path
+      fill="currentColor"
+      d="M389.6 32h94.7L327.7 222.3 512 480.1H351.3L228 310.3 87.5 480.1H-7.2L167 275.3 0 32h163.4l106.4 143.2L389.6 32ZM362.4 433.6h52.4L151.1 77.9h-56.1l267.4 355.7Z"
+    />
+  </svg>
+);
 
 export function Footer({
   logo,
@@ -62,38 +77,40 @@ export function Footer({
             ))}
           </ul>
         </div>
-        <div className="mt-6 border-t pt-6 md:mt-4 md:pt-8 lg:grid lg:grid-cols-10">
-          <nav className="lg:col-[4/11] lg:mt-0">
-            <ul className="-mx-2 -my-1 flex list-none flex-wrap justify-center text-center lg:justify-center">
-              {mainLinks.map((link, i) => (
-                <li key={i} className="mx-2 my-1 shrink-0">
-                  <a
-                    href={link.href}
-                    className="text-sm text-primary underline-offset-4 hover:underline"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="mt-6 lg:col-[4/11] lg:mt-0">
-            <ul className="-mx-3 -my-1 flex list-none flex-wrap justify-center text-center lg:justify-center">
-              {legalLinks.map((link, i) => (
-                <li key={i} className="mx-3 my-1 shrink-0">
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground underline-offset-4 hover:underline"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-6 text-center text-sm leading-6 text-muted-foreground lg:col-[1/4] lg:row-[1/3] lg:mt-0">
-            <div>{copyright.text}</div>
-            {copyright.license && <div>{copyright.license}</div>}
+        <div className="mt-6 border-t pt-6 md:mt-4 md:pt-8">
+          <div className="flex flex-col items-center gap-6 text-center">
+            <nav>
+              <ul className="-mx-2 -my-1 flex list-none flex-wrap justify-center text-center">
+                {mainLinks.map((link, i) => (
+                  <li key={i} className="mx-2 my-1 shrink-0">
+                    <a
+                      href={link.href}
+                      className="text-sm text-primary underline-offset-4 hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div>
+              <ul className="-mx-3 -my-1 flex list-none flex-wrap justify-center text-center">
+                {legalLinks.map((link, i) => (
+                  <li key={i} className="mx-3 my-1 shrink-0">
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="text-center text-sm leading-6 text-muted-foreground">
+              <div>{copyright.text}</div>
+              {copyright.license && <div>{copyright.license}</div>}
+            </div>
           </div>
         </div>
       </div>
@@ -117,9 +134,9 @@ export function KerdosFooter() {
       brandName="Kérdos Markets"
       socialLinks={[
         {
-          icon: <Twitter className="h-5 w-5" />,
+          icon: <XLogo className="h-5 w-5" />,
           href: "https://twitter.com/kerdosmarkets",
-          label: "Twitter",
+          label: "X (Twitter)",
         },
         {
           icon: <Instagram className="h-5 w-5" />,

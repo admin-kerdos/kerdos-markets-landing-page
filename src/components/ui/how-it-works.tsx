@@ -63,7 +63,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({
       icon: <Globe2 className="h-6 w-6" />,
       title: "Qué es Kérdos Markets",
       description:
-        "El primer mercado de predicción en español y portugués, 100% enfocado en LATAM. Acá comprás y vendés posiciones sobre lo que pasa en economía, elecciones, partidos de futbol, deportes y entretenimiento.",
+        "El primer mercado de predicción en español y portugués. Acá comprás y vendés posiciones sobre lo que pasa en economía, elecciones, partidos de futbol, deportes y entretenimiento.",
       benefits: [
         "Diseñado para comunidades de habla hispana y portuguesa",
         "Operá escenarios de la región con liquidez 24/7",
