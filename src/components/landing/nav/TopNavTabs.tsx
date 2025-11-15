@@ -1,18 +1,26 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/language-context";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 
-const tabs = [
-  { id: "hero", label: "Inicio" },
-  { id: "how-it-works", label: "Qué es Kérdos Markets" },
-  { id: "faq", label: "FAQ" }
-];
+const SECTION_IDS = ["hero", "how-it-works", "faq"] as const;
+type SectionId = (typeof SECTION_IDS)[number];
 
 export function TopNavTabs() {
-  const [activeId, setActiveId] = useState(tabs[0].id);
+  const { t } = useLanguage();
+  const tabs = useMemo(
+    () => [
+      { id: "hero", label: t.nav.hero },
+      { id: "how-it-works", label: t.nav.how },
+      { id: "faq", label: t.nav.faq }
+    ],
+    [t.nav.hero, t.nav.how, t.nav.faq]
+  );
+  const [activeId, setActiveId] = useState<SectionId>(SECTION_IDS[0]);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
   const [mobileOpen, setMobileOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -65,8 +73,7 @@ export function TopNavTabs() {
 
   useEffect(() => {
     const resolveSections = () =>
-      tabs
-        .map((tab) => document.getElementById(tab.id))
+      SECTION_IDS.map((id) => document.getElementById(id))
         .filter((section): section is HTMLElement => Boolean(section));
 
     const getActivationLine = () => {
@@ -115,8 +122,8 @@ export function TopNavTabs() {
   }, []);
 
   useEffect(() => {
-    const sections = tabs
-      .map((tab) => document.getElementById(tab.id))
+    const sections = SECTION_IDS
+      .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
     sections.forEach((section) => {
       section.style.scrollMarginTop = "7rem";
@@ -190,7 +197,7 @@ export function TopNavTabs() {
           data-nav
           ref={containerRef}
           className={cn(
-            "relative flex h-8 items-center gap-1 overflow-hidden rounded-full bg-white/90 px-1.5 shadow-[0_12px_35px_rgba(15,23,42,0.09)] ring-1 ring-zinc-200/70 backdrop-blur-md",
+            "relative hidden h-8 items-center gap-1 overflow-hidden rounded-full bg-white/90 px-1.5 shadow-[0_12px_35px_rgba(15,23,42,0.09)] ring-1 ring-zinc-200/70 backdrop-blur-md sm:flex",
             "dark:bg-zinc-950/95 dark:ring-white/25 dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
             "w-full max-w-full justify-center sm:w-auto sm:max-w-none"
           )}
@@ -234,29 +241,29 @@ export function TopNavTabs() {
             className="flex h-full w-[82%] max-w-sm flex-col gap-8 border-r border-border/60 bg-background px-6 py-8 text-foreground shadow-2xl"
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="text-base font-semibold">Secciones</span>
               <div className="flex items-center gap-3">
+                <LanguageToggle />
                 <ThemeToggle />
-                <button
-                  type="button"
-                  className="rounded-full border border-border/60 p-2"
-                  onClick={() => setMobileOpen(false)}
-                  aria-label="Cerrar navegación"
-                >
-                  <X className="h-5 w-5" />
-                </button>
               </div>
+              <button
+                type="button"
+                className="rounded-full border border-border/60 p-2"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Cerrar navegación"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   type="button"
                   className={cn(
-                    "w-full rounded-2xl border px-4 py-3 text-left text-lg font-semibold",
+                    "w-full border-b px-1 pb-3 text-left text-lg font-semibold transition-colors",
                     activeId === tab.id
-                      ? "border-primary/60 bg-primary/10 text-primary"
-                      : "border-border/70 bg-card/60 text-foreground"
+                      ? "text-primary border-primary"
+                      : "text-foreground border-border/50 hover:text-primary"
                   )}
                   onClick={() => {
                     navigateTo(tab.id);

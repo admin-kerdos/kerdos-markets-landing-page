@@ -3,6 +3,7 @@ import { HowItWorksBase } from "@/components/landing/howitworks/HowItWorksBase";
 import { FAQSection } from "@/components/landing/faq/FAQSection";
 import { TopNavTabs } from "@/components/landing/nav/TopNavTabs";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 import { KerdosFooter } from "@/components/ui/footer";
 
 export default function HomePage() {
@@ -11,7 +12,10 @@ export default function HomePage() {
       <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-center px-4 pt-6">
         <div className="relative flex w-full max-w-6xl flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <TopNavTabs />
-          <ThemeToggle className="hidden sm:flex sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 sm:z-50" />
+          <div className="flex items-center gap-2 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 sm:z-50">
+            <LanguageToggle className="hidden sm:flex" />
+            <ThemeToggle className="hidden sm:flex" />
+          </div>
         </div>
       </header>
       <main>

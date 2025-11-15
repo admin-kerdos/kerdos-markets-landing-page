@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test("nav indicator updates when reaching the Cómo funciona section", async ({ page }) => {
+test("nav indicator updates when reaching the Cómo funciona section", async ({ page }, testInfo) => {
+  if (testInfo.project.name.includes("mobile")) {
+    test.skip("Nav highlight hidden on mobile layout.");
+  }
   await page.goto("/");
 
   const howSection = page.locator("#how-it-works");
@@ -12,7 +15,10 @@ test("nav indicator updates when reaching the Cómo funciona section", async ({ 
   await expect(activeLink).toHaveAttribute("aria-current", "page");
 });
 
-test("nav indicator aligns with the Qué es Kérdos Markets tab", async ({ page }) => {
+test("nav indicator aligns with the Qué es Kérdos Markets tab", async ({ page }, testInfo) => {
+  if (testInfo.project.name.includes("mobile")) {
+    test.skip("Nav highlight hidden on mobile layout.");
+  }
   await page.goto("/");
 
   const howSection = page.locator("#how-it-works");
@@ -35,7 +41,10 @@ test("nav indicator aligns with the Qué es Kérdos Markets tab", async ({ page 
   }).toPass();
 });
 
-test("scrolling from hero into Qué es Kérdos Markets updates the active tab", async ({ page }) => {
+test("scrolling from hero into Qué es Kérdos Markets updates the active tab", async ({ page }, testInfo) => {
+  if (testInfo.project.name.includes("mobile")) {
+    test.skip("Desktop-only nav indicator behavior.");
+  }
   await page.goto("/");
 
   const metrics = await page.evaluate(() => {

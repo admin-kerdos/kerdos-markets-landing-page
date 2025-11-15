@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Github, Instagram } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 interface FooterProps {
   logo: ReactNode;
@@ -120,6 +123,8 @@ export function Footer({
 
 export function KerdosFooter() {
   const year = new Date().getFullYear();
+  const { t } = useLanguage();
+  const copyrightText = t.footer.copyright.replace("{year}", String(year));
   return (
     <Footer
       logo={
@@ -149,17 +154,10 @@ export function KerdosFooter() {
           label: "GitHub",
         },
       ]}
-      mainLinks={[
-        { href: "#how-it-works", label: "Cómo funciona" },
-        { href: "#faq", label: "Preguntas frecuentes" },
-        { href: "mailto:hola@kerdoscompany.com", label: "Contacto" },
-      ]}
-      legalLinks={[
-        { href: "/privacy", label: "Privacidad" },
-        { href: "/terms", label: "Términos" },
-      ]}
+      mainLinks={t.footer.mainLinks}
+      legalLinks={t.footer.legalLinks}
       copyright={{
-        text: `© ${year} Kérdos Markets. Hecho en LATAM.`,
+        text: copyrightText,
       }}
     />
   );

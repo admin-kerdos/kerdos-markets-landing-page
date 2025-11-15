@@ -1,17 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  Coins,
-  Globe2,
-  Layers,
-  ListChecks,
-  Percent,
-  ShieldCheck,
-  Tag,
-} from "lucide-react";
+import { Globe2, Layers, ListChecks, ShieldCheck } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 interface HowItWorksProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,12 +15,7 @@ interface StepCardProps {
   benefits: string[];
 }
 
-const StepCard: React.FC<StepCardProps> = ({
-  icon,
-  title,
-  description,
-  benefits,
-}) => (
+const StepCard: React.FC<StepCardProps> = ({ icon, title, description, benefits }) => (
   <div
     tabIndex={0}
     data-testid="how-step-card"
@@ -54,58 +42,23 @@ const StepCard: React.FC<StepCardProps> = ({
   </div>
 );
 
-export const HowItWorks: React.FC<HowItWorksProps> = ({
-  className,
-  ...props
-}) => {
-  const stepsData = [
-    {
-      icon: <Globe2 className="h-6 w-6" />,
-      title: "Qué es Kérdos Markets",
-      description:
-        "El primer mercado de predicción en español y portugués. Acá comprás y vendés posiciones sobre lo que pasa en economía, elecciones, partidos de futbol, deportes y entretenimiento.",
-      benefits: [
-        "Diseñado para comunidades de habla hispana y portuguesa",
-        "Operá escenarios de la región con liquidez 24/7",
-        "Comprá o vendé según tu lectura del evento",
-      ],
-    },
-    {
-      icon: <Layers className="h-6 w-6" />,
-      title: "Qué es un mercado de predicción",
-      description:
-        "Es un mercado entre personas: cada posición paga $1 si acierta y $0 si falla. El precio refleja la probabilidad que la comunidad asigna al resultado.",
-      benefits: [
-        "Si “Sí” vale $0.70, el mercado estima 70% de probabilidad",
-        "Podés entrar y salir antes del final para asegurar ganancias o limitar pérdidas",
-        "Trading puro: no jugás contra la casa sino contra otros participantes",
-      ],
-    },
-    {
-      icon: <ListChecks className="h-6 w-6" />,
-      title: 'Qué se puede "apostar" (participar)',
-      description:
-        "Economía, política, deportes y entretenimiento: vos elegís el evento y operás tu opinión.",
-      benefits: [
-        "Economía: inflación, tipo de cambio, crecimiento",
-        "Política: encuestas y resultados",
-        "Deportes: campeones, partidos, rendimiento",
-        "Entretenimiento y tendencias: premios, estrenos, cultura pop",
-      ],
-    },
-    {
-      icon: <ShieldCheck className="h-6 w-6" />,
-      title: "Por qué es mejor que lo que ya existe",
-      description:
-        "Más transparencia, menos conflicto de interés y control total del riesgo.",
-      benefits: [
-        "No jugás contra la casa, Kérdos no toma el otro lado de tu posición",
-        "Kérdos genera ingresos por comisiones por cada trade, no por tu pérdida",
-        "Podés vender antes del final para gestionar riesgo",
-        "100% seguro: tus fondos siempre están bajo tu control, Kérdos no tiene tu dinero y podés retirarlo 24/7 sin comisiones ni bloqueos.",
-      ],
-    },
-  ];
+const iconMap = {
+  globe: <Globe2 className="h-6 w-6" />,
+  layers: <Layers className="h-6 w-6" />,
+  list: <ListChecks className="h-6 w-6" />,
+  shield: <ShieldCheck className="h-6 w-6" />
+} as const;
+
+export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) => {
+  const { t } = useLanguage();
+  const stepsData = useMemo(
+    () =>
+      t.howItWorks.steps.map((step) => ({
+        ...step,
+        icon: iconMap[step.icon]
+      })),
+    [t.howItWorks.steps]
+  );
 
   return (
     <div
@@ -115,8 +68,11 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-10 max-w-4xl text-center">
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Kérdos Markets
+            {t.howItWorks.heading}
           </h2>
+          {t.howItWorks.subheading ? (
+            <p className="mt-2 text-muted-foreground">{t.howItWorks.subheading}</p>
+          ) : null}
         </div>
 
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
