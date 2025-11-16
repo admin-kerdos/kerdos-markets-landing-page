@@ -35,13 +35,13 @@ const renderBlock = (block: AnswerBlock, index: number) => {
 export function FAQSection() {
   const { t } = useLanguage();
   const faqItems = t.faq.items;
-  const [openId, setOpenId] = useState<string>(faqItems[0]?.id ?? "");
+  const [openId, setOpenId] = useState<string>("");
   const [feedback, setFeedback] = useState<Record<string, FeedbackChoice>>(() =>
     Object.fromEntries(faqItems.map((item) => [item.id, null]))
   );
 
   useEffect(() => {
-    setOpenId(faqItems[0]?.id ?? "");
+    setOpenId("");
     setFeedback(Object.fromEntries(faqItems.map((item) => [item.id, null])));
   }, [faqItems]);
 

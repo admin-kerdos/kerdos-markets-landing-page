@@ -14,9 +14,9 @@ export function TopNavTabs() {
   const { t } = useLanguage();
   const tabs = useMemo(
     () => [
-      { id: "hero", label: t.nav.hero },
-      { id: "how-it-works", label: t.nav.how },
-      { id: "faq", label: t.nav.faq }
+      { id: "hero" as SectionId, label: t.nav.hero },
+      { id: "how-it-works" as SectionId, label: t.nav.how },
+      { id: "faq" as SectionId, label: t.nav.faq }
     ],
     [t.nav.hero, t.nav.how, t.nav.faq]
   );
@@ -28,7 +28,7 @@ export function TopNavTabs() {
   const suppressAutoActive = useRef(false);
   const scrollLockTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const updateIndicator = useCallback((id: string) => {
+  const updateIndicator = useCallback((id: SectionId) => {
     const link = linkRefs.current[id];
     const container = containerRef.current;
     if (!link || !container) {
@@ -43,7 +43,7 @@ export function TopNavTabs() {
   }, []);
 
   const navigateTo = useCallback(
-    (id: string) => {
+    (id: SectionId) => {
       const section = document.getElementById(id);
       if (section) {
         section.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -92,14 +92,14 @@ export function TopNavTabs() {
       }
 
       const activationLine = getActivationLine();
-      let currentId = sections[0].id;
+      let currentId: SectionId = sections[0].id as SectionId;
 
       for (const section of sections) {
         const rectTop = section.getBoundingClientRect().top + window.scrollY;
         const scrollMarginTop = parseFloat(getComputedStyle(section).scrollMarginTop || "0");
         const threshold = rectTop - scrollMarginTop;
         if (activationLine >= threshold) {
-          currentId = section.id;
+          currentId = section.id as SectionId;
         } else {
           break;
         }
