@@ -3,14 +3,14 @@ import { NextResponse } from "next/server";
 
 export function middleware(_: NextRequest) {
   const response = NextResponse.next();
-  const isProduction = process.env.NODE_ENV === "production";
-  const scriptSrc = isProduction ? "'self'" : "'self' 'unsafe-inline' 'unsafe-eval'";
-  const styleSrc = isProduction ? "'self'" : "'self' 'unsafe-inline'";
+  const vercelLiveDomains = ["https://vercel.live", "https://*.vercel.app"];
+  const scriptSources = ["'self'", "'unsafe-inline'", "'unsafe-eval'", ...vercelLiveDomains];
+  const styleSources = ["'self'", "'unsafe-inline'"];
   const policies = {
     "Content-Security-Policy": [
       "default-src 'self'",
-      `script-src ${scriptSrc}`,
-      `style-src ${styleSrc}`,
+      `script-src ${scriptSources.join(" ")}`,
+      `style-src ${styleSources.join(" ")}`,
       "img-src 'self' data: blob:",
       "media-src 'self' data: blob:",
       "object-src 'none'",

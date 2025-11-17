@@ -93,11 +93,11 @@ export const content: Record<Language, LanguageContent> = {
           icon: "globe",
           title: "Qué es Kérdos Markets",
           description:
-            "El primer mercado de predicción en español y portugués, enfocado 100% en LATAM. Comprás y vendés posiciones sobre economía, elecciones y cultura.",
+            "El primer mercado de predicción 100% en español y portugués, enfocado en LATAM. Comprás y vendés posiciones sobre economía, elecciones y cultura.",
           benefits: [
-            "Diseñado para comunidades hispanas y lusas",
-            "Liquidez 24/7 sobre eventos regionales",
-            "Entrá o salí cuando cambia la información"
+            "Diseñado para para Latinoamerica",
+            "Liquidez 24/7",
+            "Pagos instantaneos"
           ]
         },
         {
@@ -107,15 +107,15 @@ export const content: Record<Language, LanguageContent> = {
           description:
             "Cada contrato paga $1 si acierta y $0 si falla. El precio refleja la probabilidad colectiva y cambia con los datos.",
           benefits: [
-            "Si “Sí” vale $0.70, el mercado estima 70%",
+            "Si “Sí” vale $0.70, el mercado estima 70% de probabilidad de que pase",
             "Podés tomar ganancias o cortar pérdidas antes",
-            "Operás contra personas, no contra una casa"
+            "Operás contra personas, no contra la casa"
           ]
         },
         {
           id: "step-portfolio",
           icon: "list",
-          title: 'Qué se puede "apostar"',
+          title: 'Qué se puede "apostar" participar',
           description:
             "Economía, política, deportes y entretenimiento. Elegís el evento y operás tu lectura.",
           benefits: [
@@ -160,7 +160,7 @@ export const content: Record<Language, LanguageContent> = {
             {
               type: "paragraph",
               text:
-                "En mercados de predicción hasta ≈43% de usuarios resultan rentables vs ≈2% en sportsbooks, porque el incentivo está en aportar información y no en apostar contra una casa que controla las cuotas."
+                "En mercados de predicción casi 43% de los usuarios terminan rentables porque no juegan contra la casa: negocian directamente entre personas, a diferencia de los sportsbooks donde solo ≈2% gana porque la casa siempre toma el lado opuesto."
             }
           ]
         },
@@ -218,7 +218,7 @@ export const content: Record<Language, LanguageContent> = {
           answer: [
             {
               type: "paragraph",
-              text: "Funciona globalmente en español y portugués. Priorizamos LATAM, pero podés operar desde cualquier lugar."
+              text: "Funciona globalmente en español y portugués. "
             }
           ]
         },
@@ -289,11 +289,11 @@ export const content: Record<Language, LanguageContent> = {
           icon: "globe",
           title: "O que é Kérdos Markets",
           description:
-            "O primeiro mercado de previsão em espanhol e português, 100% focado na América Latina. Compre e venda posições sobre economia, eleições e cultura.",
+            "O primeiro mercado de previsão 100% em espanhol e português, focado em LATAM. Compre e venda posições sobre economia, eleições e cultura.",
           benefits: [
-            "Pensado para comunidades ibero-latinas",
-            "Liquidez 24/7 em eventos da região",
-            "Entre ou saia quando novos dados surgirem"
+            "Feito para a América Latina",
+            "Liquidez 24/7",
+            "Pagamentos instantâneos"
           ]
         },
         {
@@ -303,15 +303,15 @@ export const content: Record<Language, LanguageContent> = {
           description:
             "Cada contrato paga US$1 se acontecer e US$0 se falhar. O preço é a probabilidade coletiva e reage à oferta e à informação.",
           benefits: [
-            "Se “Sim” vale US$0,70, o mercado estima 70%",
+            "Se “Sim” vale US$0,70, o mercado estima 70% de probabilidade",
             "Você pode travar lucro ou reduzir perda antes",
-            "Opera contra pessoas, não contra uma casa"
+            "Opera contra pessoas, não contra a casa"
           ]
         },
         {
           id: "step-portfolio",
           icon: "list",
-          title: 'O que dá para "apostar"',
+          title: 'Onde dá para "apostar" participar',
           description:
             "Economia, política, esportes e entretenimento. Você escolhe o evento e opera sua leitura.",
           benefits: [
@@ -356,7 +356,7 @@ export const content: Record<Language, LanguageContent> = {
             {
               type: "paragraph",
               text:
-                "Em mercados de previsão até ≈43% dos usuários são lucrativos vs ≈2% em sportsbooks, porque o incentivo é aportar informação, não apostar contra a casa."
+                "Nos mercados de previsão cerca de 43% dos usuários acabam rentáveis porque não jogam contra a casa: negociam diretamente entre pessoas, ao contrário dos sportsbooks onde só ≈2% ganha, porque a casa sempre fica do outro lado."
             }
           ]
         },
@@ -414,7 +414,7 @@ export const content: Record<Language, LanguageContent> = {
           answer: [
             {
               type: "paragraph",
-              text: "Funciona globalmente em espanhol e português, com foco em LATAM. Pode operar de qualquer lugar."
+              text: "Funciona globalmente em espanhol e português."
             }
           ]
         },
