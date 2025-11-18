@@ -33,27 +33,61 @@ const renderBlock = (block: AnswerBlock, index: number) => {
 };
 
 export function FAQSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const faqItems = t.faq.items;
   const [openId, setOpenId] = useState<string>("");
   const [feedback, setFeedback] = useState<Record<string, FeedbackChoice>>(() =>
     Object.fromEntries(faqItems.map((item) => [item.id, null]))
   );
+  const [submitting, setSubmitting] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(faqItems.map((item) => [item.id, false]))
+  );
 
   useEffect(() => {
     setOpenId("");
     setFeedback(Object.fromEntries(faqItems.map((item) => [item.id, null])));
+    setSubmitting(Object.fromEntries(faqItems.map((item) => [item.id, false])));
   }, [faqItems]);
 
   const handleToggle = (id: string) => {
     setOpenId((prev) => (prev === id ? "" : id));
   };
 
-  const handleFeedback = (id: string, choice: Exclude<FeedbackChoice, null>) => {
+  const handleFeedback = async (id: string, choice: Exclude<FeedbackChoice, null>) => {
+    const previousChoice = feedback[id];
+    const nextChoice = previousChoice === choice ? null : choice;
     setFeedback((prev) => ({
       ...prev,
-      [id]: prev[id] === choice ? null : choice,
+      [id]: nextChoice
     }));
+
+    if (!nextChoice) {
+      return;
+    }
+
+    setSubmitting((prev) => ({
+      ...prev,
+      [id]: true
+    }));
+
+    try {
+      await fetch("/api/faq-feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ questionId: id, choice: nextChoice, locale: language })
+      });
+    } catch (error) {
+      console.error(error);
+      setFeedback((prev) => ({
+        ...prev,
+        [id]: previousChoice
+      }));
+    } finally {
+      setSubmitting((prev) => ({
+        ...prev,
+        [id]: false
+      }));
+    }
   };
 
   return (
@@ -110,10 +144,12 @@ export function FAQSection() {
                             data-testid={`feedback-${choice}-${item.id}`}
                             aria-label={choice === "up" ? t.faq.helpful.up : t.faq.helpful.down}
                             aria-pressed={selected === choice}
+                            disabled={submitting[item.id]}
                             onClick={() => handleFeedback(item.id, choice)}
                             className={cn(
                               "inline-flex items-center justify-center rounded-full p-1 transition",
-                              selected === choice ? "text-primary" : "text-muted-foreground hover:text-primary/80"
+                              selected === choice ? "text-primary" : "text-muted-foreground hover:text-primary/80",
+                              submitting[item.id] ? "opacity-60" : ""
                             )}
                           >
                             {helpfulIcons[choice]}
